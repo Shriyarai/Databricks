@@ -14,7 +14,7 @@ file_location = "/FileStore/tables/nyc_taxi.csv"
 file_type = "csv"
 
 # CSV options
-infer_schema = "false"
+infer_schema = "true"
 first_row_is_header = "true"
 delimiter = ","
 
@@ -29,13 +29,9 @@ display(df)
 
 # COMMAND ----------
 
-display(df)
-
-# COMMAND ----------
-
 # Create a view or table
 
-temp_table_name = "nyc_taxi_csv"
+temp_table_name = "nyc_taxi_1"
 
 df.createOrReplaceTempView(temp_table_name)
 
@@ -45,7 +41,7 @@ df.createOrReplaceTempView(temp_table_name)
 # MAGIC 
 # MAGIC /* Query the created temp table in a SQL cell */
 # MAGIC 
-# MAGIC select * from `nyc_taxi_csv`
+# MAGIC select * from `nyc_taxi_1`
 
 # COMMAND ----------
 
@@ -53,7 +49,7 @@ df.createOrReplaceTempView(temp_table_name)
 # Once saved, this table will persist across cluster restarts as well as allow various users across different notebooks to query this data.
 # To do so, choose your table name and uncomment the bottom line.
 
-permanent_table_name = "nyc_taxi"
+permanent_table_name = "nyc_taxi_1"
 
 df.write.format("parquet").saveAsTable(permanent_table_name)
 
@@ -61,7 +57,7 @@ df.write.format("parquet").saveAsTable(permanent_table_name)
 
 # MAGIC %sql
 # MAGIC 
-# MAGIC select * from nyc_taxi
+# MAGIC select * from nyc_taxi_1
 
 # COMMAND ----------
 
