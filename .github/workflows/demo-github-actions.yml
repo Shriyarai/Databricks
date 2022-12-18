@@ -14,11 +14,11 @@ jobs:
        with:
          local-notebook-path: path/to/my/databricks_notebook.py
          databricks-host: https://adb-7756692533412422.2.azuredatabricks.net
-         databricks-token: ${{ secrets.DATABRICKS_TOKEN }}
+         databricks-token: dapi43253d9b007bb3ed010b79078008cf32-3
          git-commit: ${{ github.event.pull_request.head.sha }}
          new-cluster-json: >
            {
              "num_workers": 1,
-             "spark_version": "10.4.x-scala2.12",
-             "node_type_id": "Standard_D3_v2"
+             "spark_version": "12.0.x-cpu-ml-scala2.12",
+             "node_type_id": "Standard_DS3_v2"
            }
