@@ -362,3 +362,7 @@ print(runs)
 # MAGIC loaded_model = mlflow.spark.load_model(f"runs:/{last_run.info.run_uuid}/model")
 # MAGIC top_rows = sqlContext.createDataFrame(testData.head(3))
 # MAGIC display(loaded_model.transform(top_rows))
+
+# COMMAND ----------
+
+dbutils.notebook.entry_point.getDbutils().notebook().getContext().notebookPath().get()
