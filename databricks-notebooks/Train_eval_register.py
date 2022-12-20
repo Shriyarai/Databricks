@@ -4,6 +4,7 @@ import os
 import warnings
 import sys
 import numpy as np
+import pyspark
 #import findspark
 #findspark.init()
 from pyspark.sql.types import * 
@@ -32,7 +33,7 @@ from pyspark.sql import SparkSession
 
 # COMMAND ----------
 
-spark = SparkSession.builder.master("local[*]").appName("local-1671554812812") .getOrCreate()
+#spark = SparkSession.builder.master("local[*]").appName("local-1671554812812") .getOrCreate()
 
 # COMMAND ----------
 
