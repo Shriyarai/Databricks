@@ -173,6 +173,42 @@ train_nyc_taxi(trainingData, testData, label_column, "features", 1.0, 0.3, 50)
 
 # COMMAND ----------
 
+from mlflow.tracking import MlflowClient
+import time
+from mlflow.entities.model_registry.model_version_status import ModelVersionStatus
+
+client = MlflowClient()
+
+user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
+experiment_name = "/Repos/srai5@statestreet.com/Databricks/databricks-notebooks/Train_eval_register"
+
+display(experiment_name)
+
+
+
+
+
+# COMMAND ----------
+
+experiment = client.get_experiment_by_name(experiment_name)
+
+print(experiment)
+
+
+# COMMAND ----------
+
+experiment_id = experiment.experiment_id
+runs_df = client.search_runs(experiment_id, order_by=["attributes.start_time desc"], max_results=1)
+run_id = runs_df[0].info.run_uuid
+
+model_name = "NYC Taxi Amount API"
+
+artifact_path = "model"
+model_uri = "runs:/{run_id}/{artifact_path}".format(run_id=run_id, artifact_path=artifact_path)
+model_uri
+
+# COMMAND ----------
+
 model_details = mlflow.register_model(model_uri=model_uri, name=model_name)
 
 # Wait until the model is ready
@@ -189,7 +225,7 @@ def wait_until_ready(model_name, model_version):
       break
     time.sleep(1)
 
-wait_until_ready(model_details.name, model_details.versi
+wait_until_ready(model_details.name, model_details.version)
 client = MlflowClient()
 
 # COMMAND ----------

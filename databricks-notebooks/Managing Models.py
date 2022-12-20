@@ -240,6 +240,7 @@ user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().ta
 experiment_name = "/Users/{user_name}/03 - Managing Experiments and Models/02 - Managing Models".format(user_name=user_name)
 
 experiment = client.get_experiment_by_name(experiment_name)
+display(experiment)
 
 # COMMAND ----------
 
