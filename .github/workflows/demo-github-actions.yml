@@ -18,8 +18,8 @@ jobs:
        with:
           spark-version: '3.2.1'
           hadoop-version: '3.2'
-          scala-version: '2.13'
-          spark-url: 'https://archive.apache.org/dist/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2-scala2.13.tgz'
+          scala-version: '2.12'
+          spark-url: 'https://archive.apache.org/dist/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2-scala2.12.tgz'
      - name: Configure python pacakges
        run: |
           python -m pip install --upgrade pip
