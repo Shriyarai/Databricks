@@ -5,6 +5,7 @@ on:
 
 jobs:
  run-databricks-notebook:
+   runs-on: self-hosted
    environment: Dev
    steps:
      - name: Checkout repo
