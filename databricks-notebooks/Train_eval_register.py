@@ -20,6 +20,10 @@ from pyspark.ml import Pipeline
 
 # COMMAND ----------
 
+
+
+# COMMAND ----------
+
 dataset = spark.sql("select * from nyc_taxi_1")
 display(dataset)
 
