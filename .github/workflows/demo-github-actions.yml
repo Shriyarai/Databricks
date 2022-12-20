@@ -23,7 +23,6 @@ jobs:
          pip install pyspark
          pip install matplotlib
          pip install mlflow
-         from pyspark.sql import SparkSession
          python databricks-notebooks/Train_eval_register.py
          with:
            DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
