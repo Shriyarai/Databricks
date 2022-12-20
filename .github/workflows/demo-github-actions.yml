@@ -6,7 +6,6 @@ on:
 jobs:
  run-databricks-notebook:
    runs-on: ubuntu-latest
-   environment: Dev
    steps:
      - name: Checkout repo
        uses: actions/checkout@v2
@@ -15,7 +14,10 @@ jobs:
      - name: Run deployment workflow on databricks
        run: |
          pip install numpy
-         python Using_MLflow_to_Track_Experiments.py
+         pip install pyspark
+         pip install matplotlib
+         pip install mlflow
+         python databricks-notebooks/Train_eval_register.py
          with:
            DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
            DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
