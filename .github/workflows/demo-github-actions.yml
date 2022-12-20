@@ -14,8 +14,8 @@ jobs:
        uses: actions/setup-python@v2
      - name: Run a databricks notebook
        uses: databricks/run-notebook@v0
-       env:
-         local-notebook-path: databricks-notebooks/Using MLflow to Track Experiments
+       with:
+         local-notebook-path: Using MLflow to Track Experiments
          databricks-host: ${{ secrets.DATABRICKS_HOST }}
          databricks-token: ${{ secrets.DATABRICKS_TOKEN }}
          new-cluster-json: >
