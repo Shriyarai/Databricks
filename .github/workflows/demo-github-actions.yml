@@ -18,10 +18,10 @@ jobs:
           pip install databricks-cli --upgrade
      - name: Run deployment workflow on databricks
        run: |
-         export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
-         export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
          python Using MLflow to Track Experiments.py
          with:
+           DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
+           DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
            new-cluster-json: >
              {
                "num_workers": 1,
