@@ -20,10 +20,10 @@ jobs:
      - name: Run deployment workflow on databricks
        run: |
          pip install numpy
+         pip install findspark
          pip install pyspark
          pip install matplotlib
          pip install mlflow
-         pip install findspark
          python databricks-notebooks/Train_eval_register.py
          with:
            DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}

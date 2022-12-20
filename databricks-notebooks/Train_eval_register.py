@@ -4,6 +4,8 @@ import os
 import warnings
 import sys
 import numpy as np
+import findspark
+findspark.init()
 from pyspark.sql.types import * 
 from pyspark.sql.functions import col, lit
 from pyspark.sql.functions import udf
@@ -18,10 +20,11 @@ from pyspark.ml.feature import StringIndexer
 from pyspark.ml.feature import OneHotEncoder
 from pyspark.ml import Pipeline
 
-# COMMAND ----------
+from pyspark.context import SparkContext
+from pyspark.sql.session import SparkSession
 
-import findspark
-findspark.init()
+sc = SparkContext.getOrCreate()
+spark = SparkSession(sc)
 
 # COMMAND ----------
 
