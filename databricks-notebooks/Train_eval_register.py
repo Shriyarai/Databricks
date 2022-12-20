@@ -20,15 +20,15 @@ from pyspark.ml.feature import StringIndexer
 from pyspark.ml.feature import OneHotEncoder
 from pyspark.ml import Pipeline
 
-from pyspark.context import SparkContext
-from pyspark.sql.session import SparkSession
+#from pyspark.context import SparkContext
+#from pyspark.sql.session import SparkSession
 
-sc = SparkContext.getOrCreate()
-spark = SparkSession(sc)
+#sc = SparkContext.getOrCreate()
+#spark = SparkSession(sc)
 
 # COMMAND ----------
 
-dataset = spark.sql("select * from nyc_taxi_1")
+dataset = spark.table("hive_metastore.default.nyc_taxi_1")
 display(dataset)
 
 # COMMAND ----------
