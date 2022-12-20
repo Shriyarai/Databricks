@@ -1,11 +1,11 @@
 name: Run a notebook in databricks on PRs
 
 on:
- pull_request:
+ push:
 
 jobs:
  run-databricks-notebook:
-   runs-on: self-hosted
+   runs-on: ubuntu-latest
    environment: Dev
    steps:
      - name: Checkout repo
@@ -14,7 +14,7 @@ jobs:
        uses: actions/setup-python@v2
      - name: Run a databricks notebook
        uses: databricks/run-notebook@v0
-       with:
+       env:
          local-notebook-path: databricks-notebooks/Using MLflow to Track Experiments
          databricks-host: ${{ secrets.DATABRICKS_HOST }}
          databricks-token: ${{ secrets.DATABRICKS_TOKEN }}
