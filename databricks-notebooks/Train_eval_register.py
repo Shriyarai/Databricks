@@ -20,7 +20,8 @@ from pyspark.ml import Pipeline
 
 # COMMAND ----------
 
-from pyspark.sql import SparkSession
+import findspark
+findspark.init()
 
 # COMMAND ----------
 
