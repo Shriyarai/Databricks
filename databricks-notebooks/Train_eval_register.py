@@ -37,7 +37,7 @@ from pyspark.sql import SparkSession
 
 # COMMAND ----------
 
-dataset = spark.sql("select * from nyc_taxi_1")
+dataset = sparkSession.sqlContext.sql("select * from nyc_taxi_1")
 display(dataset)
 
 # COMMAND ----------
