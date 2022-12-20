@@ -11,19 +11,15 @@ jobs:
        uses: actions/checkout@v3
      - name: Setup python
        uses: actions/setup-python@v2
-     - name: Configure python packages
-       run: |
-          python -m pip install --upgrade pip
-          pip install databricks-cli --upgrade
-     - name: Run deployment workflow on databricks
-       run: |
-         export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
-         export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
-         python databricks-notebooks/Using MLflow to Track Experiments.py
-         with:
-           new-cluster-json: >
-             {
-               "num_workers": 1,
-               "spark_version": "12.0.x-cpu-ml-scala2.12",
-               "node_type_id": "Standard_DS3_v2"
-             }
+     - name: Run a databricks notebook
+       uses: databricks/run-notebook@v0
+       with:
+         local-notebook-path: databricks-notebooks/Using MLflow to Track Experiments
+         databricks-host: ${{ secrets.DATABRICKS_HOST }}
+         databricks-token: ${{ secrets.DATABRICKS_TOKEN }}
+         new-cluster-json: >
+           {
+             "num_workers": 1,
+             "spark_version": "12.0.x-cpu-ml-scala2.12",
+             "node_type_id": "Standard_DS3_v2"
+           }
