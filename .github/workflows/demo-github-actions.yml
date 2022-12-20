@@ -23,6 +23,9 @@ jobs:
          pip install pyspark
          pip install matplotlib
          pip install mlflow
+         pip install findspark
+         import findspark
+         findspark.init()
          python databricks-notebooks/Train_eval_register.py
          with:
            DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
