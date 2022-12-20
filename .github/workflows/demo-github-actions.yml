@@ -18,7 +18,7 @@ jobs:
           pip install databricks-cli --upgrade
      - name: Run deployment workflow on databricks
        run: |
-         python Using MLflow to Track Experiments.py
+         python Using_MLflow_to_Track_Experiments.py
          with:
            DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
            DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
