@@ -9,10 +9,12 @@ jobs:
    steps:
      - name: Checkout repo
        uses: actions/checkout@v2
+     - name: Setup python
+       uses: actions/setup-python@v2
      - name: Run a databricks notebook
        uses: databricks/run-notebook@v0
        with:
-         local-notebook-path: https://adb-7756692533412422.2.azuredatabricks.net/?o=7756692533412422#folder/2780482819253181
+         local-notebook-path: 01 - Using MLflow to Track Experiments
          databricks-host: https://adb-7756692533412422.2.azuredatabricks.net
          databricks-token: dapi43253d9b007bb3ed010b79078008cf32-3
          git-commit: ${{ github.event.pull_request.head.sha }}
