@@ -36,7 +36,7 @@ spark = SparkSession.builder.master("local[*]").appName("local-1671554812812") .
 
 # COMMAND ----------
 
-dataset = spark.table("hive_metastore.default.nyc_taxi_1")
+dataset = spark.sql("select * from nyc_taxi_1")
 display(dataset)
 
 # COMMAND ----------
