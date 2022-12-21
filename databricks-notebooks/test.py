@@ -56,4 +56,4 @@ print(status)
 
 # COMMAND ----------
 
-display("Ran successfully")
+print("Ran successfully")
