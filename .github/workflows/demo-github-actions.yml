@@ -21,8 +21,8 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
          local-notebook-path: databricks-triggers/test
-         DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
-         DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
+         DATABRICKS-HOST=${{ secrets.DATABRICKS_HOST }}
+         DATABRICKS-TOKEN=${{ secrets.DATABRICKS_TOKEN }}
          new-cluster-json: >
            {
              "num_workers": 1,
