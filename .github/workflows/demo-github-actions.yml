@@ -22,4 +22,4 @@ jobs:
           pip install pyspark
           export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
           export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
-          python NYC_taxi_table.py
+          python databricks-notebooks/Getting_Started.py
