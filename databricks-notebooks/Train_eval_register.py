@@ -21,7 +21,7 @@ from pyspark.ml.feature import StringIndexer
 from pyspark.ml.feature import OneHotEncoder
 from pyspark.ml import Pipeline
 
-from pyspark.shell import spark
+#from pyspark.shell import spark
 
 from pyspark.sql import SparkSession
 
