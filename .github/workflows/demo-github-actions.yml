@@ -20,7 +20,7 @@ jobs:
      - name: Trigger test file as an experiment
        uses: databricks/run-notebook@v0
        with:
-         local-notebook-path: NYC_taxi_table
+         local-notebook-path: "Repos/srai5@statestreet.com/Databricks/NYC_taxi_table.py"
          DATABRICKS-HOST: ${{ secrets.DATABRICKS_HOST }}
          DATABRICKS-TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
          new-cluster-json: >
