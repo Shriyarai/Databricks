@@ -20,12 +20,12 @@ jobs:
      - name: Run deployment workflow on databricks
        uses: databricks/run-notebook@v0
        with:
-           local-notebook-path: NYC_taxi_table
-           export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
-           export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
-           new-cluster-json: >
-             {
-               "num_workers": 1,
-               "spark_version": "12.0.x-cpu-ml-scala2.12",
-               "node_type_id": "Standard_DS3_v2"
-             }
+          local-notebook-path: NYC_taxi_table
+          DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
+          new-cluster-json: >
+            {
+              "num_workers": 1,
+              "spark_version": "12.0.x-cpu-ml-scala2.12",
+              "node_type_id": "Standard_DS3_v2"
+            }
