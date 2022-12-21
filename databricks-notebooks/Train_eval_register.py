@@ -25,11 +25,11 @@ from pyspark.ml import Pipeline
 
 from pyspark.sql import SparkSession
 
-#from pyspark.context import SparkContext
+from pyspark.context import SparkContext
 #from pyspark.sql.session import SparkSession
 
-#sc = SparkContext.getOrCreate()
-#spark = SparkSession(sc)
+sc = SparkContext.getOrCreate()
+spark = SparkSession(sc)
 
 # COMMAND ----------
 
