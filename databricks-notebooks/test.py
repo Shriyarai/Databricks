@@ -21,13 +21,13 @@ print(os.getenv("DATABRICKS_HOST"))
 
 # COMMAND ----------
 
-print(os.getenv("DATABRICKS_HOST"))
+print(os.getenv("DATABRICKS_TOKEN"))
 
 # COMMAND ----------
 
 api_client = ApiClient(
     host=os.getenv("DATABRICKS_HOST"),
-    token=os.getenv("DATABRICKS_HOST")
+    token=os.getenv("DATABRICKS_TOKEN")
 )
 
 # COMMAND ----------
