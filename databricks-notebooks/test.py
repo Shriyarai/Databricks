@@ -12,11 +12,23 @@ from databricks_cli.runs.api import RunsApi
 # https://docs.databricks.com/dev-tools/python-api.html
 # adding comment 
 
+
+
+
+# COMMAND ----------
+
+print(os.getenv("DATABRICKS_HOST"))
+
+# COMMAND ----------
+
+print(os.getenv("DATABRICKS_HOST"))
+
+# COMMAND ----------
+
 api_client = ApiClient(
     host=os.getenv("DATABRICKS_HOST"),
-    token=os.getenv("DATABRICKS_TOKEN")
+    token=os.getenv("DATABRICKS_HOST")
 )
-
 
 # COMMAND ----------
 
