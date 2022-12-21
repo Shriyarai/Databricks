@@ -21,9 +21,7 @@ jobs:
        run: |
          pip install numpy
          pip install pyspark
-         pip install matplotlib
-         pip install mlflow
-         python databricks-notebooks/Train_eval_register.py
+         python NYC_taxi_table.py
          with:
            DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
            DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
