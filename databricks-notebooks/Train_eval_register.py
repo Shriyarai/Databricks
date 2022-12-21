@@ -28,12 +28,15 @@ from pyspark.sql import SparkSession
 from pyspark.context import SparkContext
 #from pyspark.sql.session import SparkSession
 
-sc = SparkContext.getOrCreate()
-spark = SparkSession(sc)
+#sc = SparkContext.getOrCreate()
+#spark = SparkSession(sc)
 
 # COMMAND ----------
 
 #spark = SparkSession.builder.master("local[*]").appName("local-1671554812812") .getOrCreate()
+
+#%scala
+spark = SparkSession.builder.enableHiveSupport().getOrCreate()
 
 # COMMAND ----------
 
