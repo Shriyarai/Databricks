@@ -17,11 +17,7 @@ from databricks_cli.runs.api import RunsApi
 
 # COMMAND ----------
 
-print(os.getenv("DATABRICKS_HOST"))
-
-# COMMAND ----------
-
-print(os.getenv("DATABRICKS_TOKEN"))
+DATABRICKS_HOST="https://adb-7756692533412422.2.azuredatabricks.net/"
 
 # COMMAND ----------
 
@@ -29,6 +25,11 @@ api_client = ApiClient(
     host=os.getenv("DATABRICKS_HOST"),
     token=os.getenv("DATABRICKS_TOKEN")
 )
+
+# COMMAND ----------
+
+print(os.getenv("DATABRICKS_HOST"))
+print(os.getenv("DATABRICKS_TOKEN"))
 
 # COMMAND ----------
 
