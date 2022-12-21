@@ -21,8 +21,8 @@ jobs:
        uses: databricks/run-notebook@v0
        with:
            local-notebook-path: NYC_taxi_table
-           DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
-           DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
+           export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
+           export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
            new-cluster-json: >
              {
                "num_workers": 1,
