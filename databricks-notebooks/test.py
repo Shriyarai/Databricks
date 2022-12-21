@@ -29,6 +29,7 @@ api_client = ApiClient(
 # COMMAND ----------
 
 print(os.getenv("DATABRICKS_HOST"))
+print("hello")
 print(os.getenv("DATABRICKS_TOKEN"))
 
 # COMMAND ----------
