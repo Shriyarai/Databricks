@@ -17,7 +17,9 @@ from databricks_cli.runs.api import RunsApi
 
 # COMMAND ----------
 
-DATABRICKS_HOST="https://adb-7756692533412422.2.azuredatabricks.net/"
+#DATABRICKS_HOST="https://adb-7756692533412422.2.azuredatabricks.net/"
+var_1=os.getenv("DATABRICKS_HOST")
+print(var_1[:2])
 
 # COMMAND ----------
 
