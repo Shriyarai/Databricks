@@ -9,6 +9,15 @@
 
 # COMMAND ----------
 
+from pyspark.sql import SparkSession
+from pyspark.context import SparkContext
+#from pyspark.sql.session import SparkSession
+
+#sc = SparkContext.getOrCreate()
+#spark = SparkSession(sc)
+
+# COMMAND ----------
+
 # File location and type
 file_location = "/FileStore/tables/nyc_taxi.csv"
 file_type = "csv"
