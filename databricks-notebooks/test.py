@@ -26,7 +26,7 @@ jobs_api = JobsApi(api_client)  # https://github.com/databricks/databricks-cli/b
 runs_api = RunsApi(api_client)  # https://github.com/databricks/databricks-cli/blob/main/databricks_cli/runs/api.py
 
 # --------------- TRIGGER TRAINING AND EVALUATION -----------------
-train_eval_run = jobs_api.run_now(73317636492511,
+train_eval_run = jobs_api.run_now(379800233032994,
                                   jar_params=None,
                                   notebook_params=None,
                                   python_params=None,
