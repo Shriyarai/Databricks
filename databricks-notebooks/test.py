@@ -20,6 +20,10 @@ api_client = ApiClient(
 
 # COMMAND ----------
 
+print("Cell 1 done")
+
+# COMMAND ----------
+
 
 
 jobs_api = JobsApi(api_client)  # https://github.com/databricks/databricks-cli/blob/main/databricks_cli/jobs/api.py
@@ -57,3 +61,4 @@ print(status)
 # COMMAND ----------
 
 print("Ran successfully")
+
