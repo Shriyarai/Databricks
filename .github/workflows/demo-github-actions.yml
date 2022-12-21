@@ -19,6 +19,7 @@ jobs:
           pip install databricks-cli --upgrade
      - name: Trigger test file as an experiment
        run: |
+          pip install pyspark
           export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
           export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
           python NYC_taxi_table.py
