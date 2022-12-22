@@ -133,6 +133,9 @@ from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
 
 model_name = None
+elastic_net_param = 0.5
+reg_param = 0.9
+max_iter = 1000
 
   # Evaluate metrics
 def eval_metrics(predictions):
@@ -149,7 +152,7 @@ def eval_metrics(predictions):
 
 # Start an MLflow run; the "with" keyword ensures we'll close the run even if this cell crashes
 with mlflow.start_run():
-  lr = LinearRegression(featuresCol="features", labelCol=label_column, elasticNetParam=0.5, regParam=0.9, maxIter=1000)
+  lr = LinearRegression(featuresCol="features", labelCol=label_column, elasticNetParam=elastic_net_param, regParam=reg_param, maxIter=max_iter)
   lrModel = lr.fit(trainingData)
   predictions = lrModel.transform(testData)
   (rmse, mae, r2) = eval_metrics(predictions)
