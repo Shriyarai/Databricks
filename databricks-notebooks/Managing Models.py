@@ -185,7 +185,7 @@ print('Created training and evaluation method')
 
 # COMMAND ----------
 
-# MAGIC %fs rm -r dbfs:/mlflow/taxi_total_amount_2
+#%fs rm -r dbfs:/mlflow/taxi_total_amount_2
 
 # COMMAND ----------
 
@@ -194,7 +194,7 @@ print('Created training and evaluation method')
 # COMMAND ----------
 
 # L1 penalty, regularization parameter 0.3, 50 iterations
-train_nyc_taxi(trainingData, testData, label_column, "features", 1.0, 0.3, 50)
+#train_nyc_taxi(trainingData, testData, label_column, "features", 1.0, 0.3, 50)
 
 # COMMAND ----------
 
@@ -313,20 +313,20 @@ client.update_model_version(
 
 # COMMAND ----------
 
-client.transition_model_version_stage(
-  name=model_details.name,
-  version=model_details.version,
-  stage='Production',
-)
-model_version_details = client.get_model_version(
-  name=model_details.name,
-  version=model_details.version,
-)
-print("The current model stage is: '{stage}'".format(stage=model_version_details.current_stage))
+# client.transition_model_version_stage(
+#   name=model_details.name,
+#   version=model_details.version,
+#   stage='Production',
+# )
+# model_version_details = client.get_model_version(
+#   name=model_details.name,
+#   version=model_details.version,
+# )
+# print("The current model stage is: '{stage}'".format(stage=model_version_details.current_stage))
 
-latest_version_info = client.get_latest_versions(model_name, stages=["Production"])
-latest_production_version = latest_version_info[0].version
-print("The latest production version of the model '%s' is '%s'." % (model_name, latest_production_version))
+# latest_version_info = client.get_latest_versions(model_name, stages=["Production"])
+# latest_production_version = latest_version_info[0].version
+# print("The latest production version of the model '%s' is '%s'." % (model_name, latest_production_version))
 
 # COMMAND ----------
 
@@ -336,13 +336,13 @@ print("The latest production version of the model '%s' is '%s'." % (model_name, 
 
 # COMMAND ----------
 
-import mlflow.pyfunc
+# import mlflow.pyfunc
 
-def forecast_nyc_taxi_amount(model_name, model_stage, df):
-  model_uri = "models:/{model_name}/{model_stage}".format(model_name=model_name,model_stage=model_stage)
-  print("Loading registered model version from URI: '{model_uri}'".format(model_uri=model_uri))
-  model = mlflow.pyfunc.load_model(model_uri)
-  return model.predict(df)
+# def forecast_nyc_taxi_amount(model_name, model_stage, df):
+#   model_uri = "models:/{model_name}/{model_stage}".format(model_name=model_name,model_stage=model_stage)
+#   print("Loading registered model version from URI: '{model_uri}'".format(model_uri=model_uri))
+#   model = mlflow.pyfunc.load_model(model_uri)
+#   return model.predict(df)
 
 # COMMAND ----------
 
@@ -350,9 +350,10 @@ def forecast_nyc_taxi_amount(model_name, model_stage, df):
 
 # COMMAND ----------
 
-model_stage = "Production"
-df = testData.head(1)
-forecast_nyc_taxi_amount(model_name, model_stage, df)
+# model_stage = "Production"
+# df = testData.head(1)
+# forecast_nyc_taxi_amount(model_name, model_stage, df)
+
 
 # COMMAND ----------
 
@@ -362,9 +363,10 @@ forecast_nyc_taxi_amount(model_name, model_stage, df)
 
 # COMMAND ----------
 
+
 # Create a new version
 # L2 penalty, regularization parameter 0.3, 500 iterations
-train_nyc_taxi(trainingData, testData, label_column, "features", 0.0, 0.3, 500, model_name)
+#train_nyc_taxi(trainingData, testData, label_column, "features", 0.0, 0.3, 500, model_name)
 
 # COMMAND ----------
 
@@ -372,10 +374,11 @@ train_nyc_taxi(trainingData, testData, label_column, "features", 0.0, 0.3, 500, 
 
 # COMMAND ----------
 
-model_version_infos = client.search_model_versions("name = '%s'" % model_name)
-new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
+# model_version_infos = client.search_model_versions("name = '%s'" % model_name)
+# new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
 
-wait_until_ready(model_name, new_model_version)
+# wait_until_ready(model_name, new_model_version)
+
 
 # COMMAND ----------
 
@@ -383,11 +386,11 @@ wait_until_ready(model_name, new_model_version)
 
 # COMMAND ----------
 
-client.update_model_version(
-  name=model_name,
-  version=new_model_version,
-  description="This model version has changed the max number of iterations to 500 and minimizes L2 penalties."
-)
+# client.update_model_version(
+#   name=model_name,
+#   version=new_model_version,
+#   description="This model version has changed the max number of iterations to 500 and minimizes L2 penalties."
+# )
 
 # COMMAND ----------
 
@@ -395,11 +398,11 @@ client.update_model_version(
 
 # COMMAND ----------
 
-client.transition_model_version_stage(
-  name=model_name,
-  version=new_model_version,
-  stage="Staging",
-)
+# client.transition_model_version_stage(
+#   name=model_name,
+#   version=new_model_version,
+#   stage="Staging",
+# )
 
 # COMMAND ----------
 
@@ -410,7 +413,7 @@ client.transition_model_version_stage(
 # COMMAND ----------
 
 # Generate a prediction for the new model
-forecast_nyc_taxi_amount(model_name, "Staging", df)
+# forecast_nyc_taxi_amount(model_name, "Staging", df)
 
 # COMMAND ----------
 
@@ -424,15 +427,15 @@ forecast_nyc_taxi_amount(model_name, "Staging", df)
 
 # COMMAND ----------
 
-client.transition_model_version_stage(
-  name=model_name,
-  version=new_model_version,
-  stage="Production",
-)
+# client.transition_model_version_stage(
+#   name=model_name,
+#   version=new_model_version,
+#   stage="Production",
+# )
 
 # COMMAND ----------
 
-client.search_model_versions("name = '%s'" % model_name)
+# client.search_model_versions("name = '%s'" % model_name)
 
 # COMMAND ----------
 
@@ -440,7 +443,7 @@ client.search_model_versions("name = '%s'" % model_name)
 
 # COMMAND ----------
 
-forecast_nyc_taxi_amount(model_name, "Production", df)
+# forecast_nyc_taxi_amount(model_name, "Production", df)
 
 # COMMAND ----------
 
@@ -454,11 +457,11 @@ forecast_nyc_taxi_amount(model_name, "Production", df)
 
 # COMMAND ----------
 
-client.transition_model_version_stage(
-  name=model_name,
-  version=model_details.version,
-  stage="Archived",
-)
+# client.transition_model_version_stage(
+#   name=model_name,
+#   version=model_details.version,
+#   stage="Archived",
+# )
 
 # COMMAND ----------
 
@@ -466,10 +469,10 @@ client.transition_model_version_stage(
 
 # COMMAND ----------
 
-client.delete_model_version(
-   name=model_name,
-   version=model_details.version,
-)
+# client.delete_model_version(
+#    name=model_name,
+#    version=model_details.version,
+# )
 
 # COMMAND ----------
 
@@ -477,19 +480,19 @@ client.delete_model_version(
 
 # COMMAND ----------
 
-# Need to transition before deleting
-client.transition_model_version_stage(
-  name=model_name,
-  version=new_model_version,
-  stage="Archived",
-)
+# # Need to transition before deleting
+# client.transition_model_version_stage(
+#   name=model_name,
+#   version=new_model_version,
+#   stage="Archived",
+# )
 
 # COMMAND ----------
 
-client.delete_model_version(
-   name=model_name,
-   version=new_model_version
-)
+# client.delete_model_version(
+#    name=model_name,
+#    version=new_model_version
+# )
 
 # COMMAND ----------
 
@@ -497,4 +500,4 @@ client.delete_model_version(
 
 # COMMAND ----------
 
-client.delete_registered_model(name=model_name)
+# client.delete_registered_model(name=model_name)
