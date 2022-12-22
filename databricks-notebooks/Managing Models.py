@@ -254,7 +254,7 @@ client = MlflowClient()
 
 experiment_id = experiment.experiment_id
 runs_df = client.search_runs(experiment_id, order_by=["attributes.start_time desc"], max_results=1)
-run_id = runs_df[0].info.run_uuid
+run_id = runs_df.info.run_uuid
 
 model_name = "NYC Taxi Amount API"
 
