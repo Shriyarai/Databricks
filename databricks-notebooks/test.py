@@ -8,20 +8,16 @@ from databricks_cli.jobs.api import JobsApi
 # for working with job runs
 from databricks_cli.runs.api import RunsApi
 
+# COMMAND ----------
+
+export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
+export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
+
+# COMMAND ----------
+
 # --------- Setup authentication with Databricks API ------------
 # https://docs.databricks.com/dev-tools/python-api.html
 # adding comment 
-
-
-
-
-# COMMAND ----------
-
-#DATABRICKS_HOST="https://adb-7756692533412422.2.azuredatabricks.net/"
-var_1=os.getenv("DATABRICKS_HOST")
-print(var_1[:2])
-
-# COMMAND ----------
 
 api_client = ApiClient(
     host=os.getenv("DATABRICKS_HOST"),
@@ -35,12 +31,6 @@ print("hello")
 print(os.getenv("DATABRICKS_TOKEN"))
 
 # COMMAND ----------
-
-print("Cell 1 done")
-
-# COMMAND ----------
-
-
 
 jobs_api = JobsApi(api_client)  # https://github.com/databricks/databricks-cli/blob/main/databricks_cli/jobs/api.py
 runs_api = RunsApi(api_client)  # https://github.com/databricks/databricks-cli/blob/main/databricks_cli/runs/api.py
