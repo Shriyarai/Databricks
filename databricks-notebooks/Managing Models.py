@@ -177,7 +177,7 @@ with mlflow.start_run():
     mlflow.spark.log_model(lrModel, "model")
   else:
     mlflow.spark.log_model(lrModel, artifact_path="model", registered_model_name=model_name)
-  modelpath = "/dbfs/mlflow/taxi_total_amount_2/model-%f-%f-%f" % (elastic_net_param, reg_param, max_iter)
+  modelpath = "/tmp/databricks-github-actions/model-%f-%f-%f" % (elastic_net_param, reg_param, max_iter)
   mlflow.spark.save_model(lrModel, modelpath)
 
   # Generate a plot
@@ -262,7 +262,7 @@ experiment_id = experiment.experiment_id
 runs_df = client.search_runs(experiment_id, order_by=["attributes.start_time desc"], max_results=1)
 run_id = runs_df.info.run_uuid
 
-model_name = "NYC Taxi Amount API"
+model_name = "NYC Taxi Amount API 1"
 
 artifact_path = "model"
 model_uri = "runs:/{run_id}/{artifact_path}".format(run_id=run_id, artifact_path=artifact_path)
