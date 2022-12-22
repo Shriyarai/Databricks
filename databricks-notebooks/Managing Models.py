@@ -128,55 +128,56 @@ print('Created regression quality plot function')
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
 
-def train_nyc_taxi(train_data, test_data, label_column, features_column, elastic_net_param, reg_param, max_iter, model_name=None):
+model_name = None
+
   # Evaluate metrics
-  def eval_metrics(predictions):
-      evaluator = RegressionEvaluator(
-          labelCol=label_column, predictionCol="prediction", metricName="rmse")
-      rmse = evaluator.evaluate(predictions)
-      evaluator = RegressionEvaluator(
-          labelCol=label_column, predictionCol="prediction", metricName="mae")
-      mae = evaluator.evaluate(predictions)
-      evaluator = RegressionEvaluator(
-          labelCol=label_column, predictionCol="prediction", metricName="r2")
-      r2 = evaluator.evaluate(predictions)
-      return rmse, mae, r2
+def eval_metrics(predictions):
+    evaluator = RegressionEvaluator(
+        labelCol=label_column, predictionCol="prediction", metricName="rmse")
+    rmse = evaluator.evaluate(predictions)
+    evaluator = RegressionEvaluator(
+        labelCol=label_column, predictionCol="prediction", metricName="mae")
+    mae = evaluator.evaluate(predictions)
+    evaluator = RegressionEvaluator(
+        labelCol=label_column, predictionCol="prediction", metricName="r2")
+    r2 = evaluator.evaluate(predictions)
+    return rmse, mae, r2
 
-  # Start an MLflow run; the "with" keyword ensures we'll close the run even if this cell crashes
-  with mlflow.start_run():
-    lr = LinearRegression(featuresCol="features", labelCol=label_column, elasticNetParam=elastic_net_param, regParam=reg_param, maxIter=max_iter)
-    lrModel = lr.fit(train_data)
-    predictions = lrModel.transform(test_data)
-    (rmse, mae, r2) = eval_metrics(predictions)
+# Start an MLflow run; the "with" keyword ensures we'll close the run even if this cell crashes
+with mlflow.start_run():
+  lr = LinearRegression(featuresCol="features", labelCol=label_column, elasticNetParam=0.5, regParam=0.9, maxIter=1000)
+  lrModel = lr.fit(train_data)
+  predictions = lrModel.transform(test_data)
+  (rmse, mae, r2) = eval_metrics(predictions)
 
-    # Print out model metrics
-    print("Linear regression model (elasticNetParam=%f, regParam=%f, maxIter=%f):" % (elastic_net_param, reg_param, max_iter))
-    print("  RMSE: %s" % rmse)
-    print("  MAE: %s" % mae)
-    print("  R2: %s" % r2)
+  # Print out model metrics
+  print("Linear regression model (elasticNetParam=%f, regParam=%f, maxIter=%f):" % (elastic_net_param, reg_param, max_iter))
+  print("  RMSE: %s" % rmse)
+  print("  MAE: %s" % mae)
+  print("  R2: %s" % r2)
 
-    # Log hyperparameters for mlflow UI
-    mlflow.log_param("elastic_net_param", elastic_net_param)
-    mlflow.log_param("reg_param", reg_param)
-    mlflow.log_param("max_iter", max_iter)
-    # Log evaluation metrics
-    mlflow.log_metric("rmse", rmse)
-    mlflow.log_metric("r2", r2)
-    mlflow.log_metric("mae", mae)
-    # Log the model itself
-    if model_name is None:
-      mlflow.spark.log_model(lrModel, "model")
-    else:
-      mlflow.spark.log_model(lrModel, artifact_path="model", registered_model_name=model_name)
-    modelpath = "/dbfs/mlflow/taxi_total_amount_2/model-%f-%f-%f" % (elastic_net_param, reg_param, max_iter)
-    mlflow.spark.save_model(lrModel, modelpath)
-    
-    # Generate a plot
-    image = plot_regression_quality(predictions)
-    
-    # Log artifacts (in this case, the regression quality image)
-    mlflow.log_artifact("LinearRegressionPrediction.png")
-    
+  # Log hyperparameters for mlflow UI
+  mlflow.log_param("elastic_net_param", elastic_net_param)
+  mlflow.log_param("reg_param", reg_param)
+  mlflow.log_param("max_iter", max_iter)
+  # Log evaluation metrics
+  mlflow.log_metric("rmse", rmse)
+  mlflow.log_metric("r2", r2)
+  mlflow.log_metric("mae", mae)
+  # Log the model itself
+  if model_name is None:
+    mlflow.spark.log_model(lrModel, "model")
+  else:
+    mlflow.spark.log_model(lrModel, artifact_path="model", registered_model_name=model_name)
+  modelpath = "/dbfs/mlflow/taxi_total_amount_2/model-%f-%f-%f" % (elastic_net_param, reg_param, max_iter)
+  mlflow.spark.save_model(lrModel, modelpath)
+
+  # Generate a plot
+  image = plot_regression_quality(predictions)
+
+  # Log artifacts (in this case, the regression quality image)
+  mlflow.log_artifact("LinearRegressionPrediction.png")
+
 print('Created training and evaluation method')
 
 # COMMAND ----------
@@ -222,7 +223,7 @@ print('Created training and evaluation method')
 
 # COMMAND ----------
 
-experiment = mlflow.set_experiment("/Users/srai5@statestreet.com/03 - Managing Experiments and Models/Exp_1")
+# experiment = mlflow.set_experiment("/Users/srai5@statestreet.com/03 - Managing Experiments and Models/Exp_1")
 
 # COMMAND ----------
 
