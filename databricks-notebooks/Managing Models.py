@@ -194,7 +194,7 @@ print('Created training and evaluation method')
 # COMMAND ----------
 
 # L1 penalty, regularization parameter 0.3, 50 iterations
-#train_nyc_taxi(trainingData, testData, label_column, "features", 1.0, 0.3, 50)
+train_nyc_taxi(trainingData, testData, label_column, "features", 1.0, 0.3, 50)
 
 # COMMAND ----------
 
