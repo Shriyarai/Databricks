@@ -113,7 +113,8 @@ def plot_regression_quality(predictions):
   global image
 
   image = fig
-  fig.savefig("LinearRegressionPrediction.png")
+#   for some reasons giving error in GA
+#   fig.savefig("LinearRegressionPrediction.png")
   plt.close(fig)
   return image
 
