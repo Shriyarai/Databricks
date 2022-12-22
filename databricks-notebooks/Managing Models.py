@@ -246,11 +246,13 @@ client = MlflowClient()
 
 # COMMAND ----------
 
+# uncomment when running directly through notebook
+
 # user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
-# experiment_name = "/Users/{user_name}/03 - Managing Experiments and Models/02 - Managing Models".format(user_name=user_name)
+# experiment_name = "/Repos/{user_name}/Databricks/databricks-notebooks/Managing Models".format(user_name=user_name)
 
 # experiment = client.get_experiment_by_name(experiment_name)
-# display(experiment)
+# print(experiment)
 
 # COMMAND ----------
 
@@ -262,7 +264,7 @@ experiment_id = experiment.experiment_id
 print(experiment_id)
 runs_df = client.search_runs(experiment_id, order_by=["attributes.start_time desc"], max_results=1)
 print(runs_df)
-run_id = runs_df.Run.info.run_uuid
+run_id = runs_df[0].info.run_uuid
 print(run_id)
 
 model_name = "NYC Taxi Amount API 1"
