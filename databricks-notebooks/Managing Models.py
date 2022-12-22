@@ -222,7 +222,7 @@ print('Created training and evaluation method')
 
 # COMMAND ----------
 
-experiment = mlflow.set_experiment("ambitious-fly-759")
+experiment = mlflow.set_experiment("/Users/srai5@statestreet.com/03 - Managing Experiments and Models/Exp_1")
 
 # COMMAND ----------
 
