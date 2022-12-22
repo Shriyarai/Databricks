@@ -121,6 +121,10 @@ print('Created regression quality plot function')
 
 # COMMAND ----------
 
+experiment = mlflow.set_experiment("/Users/srai5@statestreet.com/03 - Managing Experiments and Models/Exp_1")
+
+# COMMAND ----------
+
 # MAGIC %md The following method trains the regression model and uses MLflow Tracking to record parameters, metrics, model, and a plot which compares actual versus predicted amounts spent on taxi rides.  This is essentially the same model as what you used in the prior lesson, although there is a minor change in lines 40-43, which you will take advantage of in the next exercise.
 
 # COMMAND ----------
@@ -220,10 +224,6 @@ print('Created training and evaluation method')
 # MAGIC %md ## Managing a Model via Code
 # MAGIC 
 # MAGIC In addition to the user interface, it is possible to manage models via code.  In this exercise, you will take the same trained model as in the prior exercise and manage the model using the `MlflowClient` library in Python.
-
-# COMMAND ----------
-
-# experiment = mlflow.set_experiment("/Users/srai5@statestreet.com/03 - Managing Experiments and Models/Exp_1")
 
 # COMMAND ----------
 
