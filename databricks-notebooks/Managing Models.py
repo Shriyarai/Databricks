@@ -183,7 +183,8 @@ with mlflow.start_run():
   image = plot_regression_quality(predictions)
 
   # Log artifacts (in this case, the regression quality image)
-  mlflow.log_artifact("LinearRegressionPrediction.png")
+  #for some reasons this doesn't work with github actions - for later
+  #mlflow.log_artifact("LinearRegressionPrediction.png")
 
 print('Created training and evaluation method')
 
