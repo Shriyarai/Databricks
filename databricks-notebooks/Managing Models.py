@@ -150,8 +150,8 @@ def eval_metrics(predictions):
 # Start an MLflow run; the "with" keyword ensures we'll close the run even if this cell crashes
 with mlflow.start_run():
   lr = LinearRegression(featuresCol="features", labelCol=label_column, elasticNetParam=0.5, regParam=0.9, maxIter=1000)
-  lrModel = lr.fit(train_data)
-  predictions = lrModel.transform(test_data)
+  lrModel = lr.fit(trainingData)
+  predictions = lrModel.transform(testData)
   (rmse, mae, r2) = eval_metrics(predictions)
 
   # Print out model metrics
