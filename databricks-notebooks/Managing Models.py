@@ -194,7 +194,7 @@ print('Created training and evaluation method')
 # COMMAND ----------
 
 # L1 penalty, regularization parameter 0.3, 50 iterations
-train_nyc_taxi(trainingData, testData, label_column, "features", 1.0, 0.3, 50)
+# train_nyc_taxi(trainingData, testData, label_column, "features", 1.0, 0.3, 50)
 
 # COMMAND ----------
 
@@ -222,6 +222,10 @@ train_nyc_taxi(trainingData, testData, label_column, "features", 1.0, 0.3, 50)
 
 # COMMAND ----------
 
+experiment = mlflow.set_experiment("ambitious-fly-759")
+
+# COMMAND ----------
+
 from mlflow.tracking import MlflowClient
 import time
 from mlflow.entities.model_registry.model_version_status import ModelVersionStatus
@@ -236,11 +240,11 @@ client = MlflowClient()
 
 # COMMAND ----------
 
-user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
-experiment_name = "/Users/{user_name}/03 - Managing Experiments and Models/02 - Managing Models".format(user_name=user_name)
+# user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
+# experiment_name = "/Users/{user_name}/03 - Managing Experiments and Models/02 - Managing Models".format(user_name=user_name)
 
-experiment = client.get_experiment_by_name(experiment_name)
-display(experiment)
+# experiment = client.get_experiment_by_name(experiment_name)
+# display(experiment)
 
 # COMMAND ----------
 
