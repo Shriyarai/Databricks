@@ -328,20 +328,20 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# client.transition_model_version_stage(
-#   name=model_details.name,
-#   version=model_details.version,
-#   stage='Production',
-# )
-# model_version_details = client.get_model_version(
-#   name=model_details.name,
-#   version=model_details.version,
-# )
-# print("The current model stage is: '{stage}'".format(stage=model_version_details.current_stage))
+client.transition_model_version_stage(
+  name=model_details.name,
+  version=model_details.version,
+  stage='Production',
+)
+model_version_details = client.get_model_version(
+  name=model_details.name,
+  version=model_details.version,
+)
+print("The current model stage is: '{stage}'".format(stage=model_version_details.current_stage))
 
-# latest_version_info = client.get_latest_versions(model_name, stages=["Production"])
-# latest_production_version = latest_version_info[0].version
-# print("The latest production version of the model '%s' is '%s'." % (model_name, latest_production_version))
+latest_version_info = client.get_latest_versions(model_name, stages=["Production"])
+latest_production_version = latest_version_info[0].version
+print("The latest production version of the model '%s' is '%s'." % (model_name, latest_production_version))
 
 # COMMAND ----------
 
@@ -351,13 +351,13 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# import mlflow.pyfunc
+import mlflow.pyfunc
 
-# def forecast_nyc_taxi_amount(model_name, model_stage, df):
-#   model_uri = "models:/{model_name}/{model_stage}".format(model_name=model_name,model_stage=model_stage)
-#   print("Loading registered model version from URI: '{model_uri}'".format(model_uri=model_uri))
-#   model = mlflow.pyfunc.load_model(model_uri)
-#   return model.predict(df)
+def forecast_nyc_taxi_amount(model_name, model_stage, df):
+  model_uri = "models:/{model_name}/{model_stage}".format(model_name=model_name,model_stage=model_stage)
+  print("Loading registered model version from URI: '{model_uri}'".format(model_uri=model_uri))
+  model = mlflow.pyfunc.load_model(model_uri)
+  return model.predict(df)
 
 # COMMAND ----------
 
@@ -365,9 +365,9 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# model_stage = "Production"
-# df = testData.head(1)
-# forecast_nyc_taxi_amount(model_name, model_stage, df)
+model_stage = "Production"
+df = testData.head(1)
+forecast_nyc_taxi_amount(model_name, model_stage, df)
 
 
 # COMMAND ----------
@@ -385,14 +385,77 @@ client.update_model_version(
 
 # COMMAND ----------
 
+# using this in place of above cell
+
+from pyspark.ml.regression import LinearRegression
+from pyspark.ml.evaluation import RegressionEvaluator
+
+model_name = None
+elastic_net_param = 0.0
+reg_param = 0.3
+max_iter = 500
+
+  # Evaluate metrics
+def eval_metrics(predictions):
+    evaluator = RegressionEvaluator(
+        labelCol=label_column, predictionCol="prediction", metricName="rmse")
+    rmse = evaluator.evaluate(predictions)
+    evaluator = RegressionEvaluator(
+        labelCol=label_column, predictionCol="prediction", metricName="mae")
+    mae = evaluator.evaluate(predictions)
+    evaluator = RegressionEvaluator(
+        labelCol=label_column, predictionCol="prediction", metricName="r2")
+    r2 = evaluator.evaluate(predictions)
+    return rmse, mae, r2
+
+# Start an MLflow run; the "with" keyword ensures we'll close the run even if this cell crashes
+with mlflow.start_run():
+  lr = LinearRegression(featuresCol="features", labelCol=label_column, elasticNetParam=elastic_net_param, regParam=reg_param, maxIter=max_iter)
+  lrModel = lr.fit(trainingData)
+  predictions = lrModel.transform(testData)
+  (rmse, mae, r2) = eval_metrics(predictions)
+
+  # Print out model metrics
+  print("Linear regression model (elasticNetParam=%f, regParam=%f, maxIter=%f):" % (elastic_net_param, reg_param, max_iter))
+  print("  RMSE: %s" % rmse)
+  print("  MAE: %s" % mae)
+  print("  R2: %s" % r2)
+
+  # Log hyperparameters for mlflow UI
+  mlflow.log_param("elastic_net_param", elastic_net_param)
+  mlflow.log_param("reg_param", reg_param)
+  mlflow.log_param("max_iter", max_iter)
+  # Log evaluation metrics
+  mlflow.log_metric("rmse", rmse)
+  mlflow.log_metric("r2", r2)
+  mlflow.log_metric("mae", mae)
+  # Log the model itself
+  if model_name is None:
+    mlflow.spark.log_model(lrModel, "model")
+  else:
+    mlflow.spark.log_model(lrModel, artifact_path="model", registered_model_name=model_name)
+  modelpath = "/tmp/databricks-github-actions/model-%f-%f-%f" % (elastic_net_param, reg_param, max_iter)
+  mlflow.spark.save_model(lrModel, modelpath)
+
+  # Generate a plot
+  image = plot_regression_quality(predictions)
+
+  # Log artifacts (in this case, the regression quality image)
+  #for some reasons this doesn't work with github actions - for later
+  #mlflow.log_artifact("LinearRegressionPrediction.png")
+
+print('Created training and evaluation method')
+
+# COMMAND ----------
+
 # MAGIC %md Now, retrieve the latest version of the `NYC Taxi Amount API` model.
 
 # COMMAND ----------
 
-# model_version_infos = client.search_model_versions("name = '%s'" % model_name)
-# new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
+model_version_infos = client.search_model_versions("name = '%s'" % model_name)
+new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
 
-# wait_until_ready(model_name, new_model_version)
+wait_until_ready(model_name, new_model_version)
 
 
 # COMMAND ----------
@@ -401,11 +464,11 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# client.update_model_version(
-#   name=model_name,
-#   version=new_model_version,
-#   description="This model version has changed the max number of iterations to 500 and minimizes L2 penalties."
-# )
+client.update_model_version(
+  name=model_name,
+  version=new_model_version,
+  description="This model version has changed the max number of iterations to 500 and minimizes L2 penalties."
+)
 
 # COMMAND ----------
 
@@ -413,11 +476,11 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# client.transition_model_version_stage(
-#   name=model_name,
-#   version=new_model_version,
-#   stage="Staging",
-# )
+client.transition_model_version_stage(
+  name=model_name,
+  version=new_model_version,
+  stage="Staging",
+)
 
 # COMMAND ----------
 
@@ -427,8 +490,8 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# Generate a prediction for the new model
-# forecast_nyc_taxi_amount(model_name, "Staging", df)
+Generate a prediction for the new model
+forecast_nyc_taxi_amount(model_name, "Staging", df)
 
 # COMMAND ----------
 
@@ -442,15 +505,15 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# client.transition_model_version_stage(
-#   name=model_name,
-#   version=new_model_version,
-#   stage="Production",
-# )
+client.transition_model_version_stage(
+  name=model_name,
+  version=new_model_version,
+  stage="Production",
+)
 
 # COMMAND ----------
 
-# client.search_model_versions("name = '%s'" % model_name)
+client.search_model_versions("name = '%s'" % model_name)
 
 # COMMAND ----------
 
@@ -458,7 +521,7 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# forecast_nyc_taxi_amount(model_name, "Production", df)
+forecast_nyc_taxi_amount(model_name, "Production", df)
 
 # COMMAND ----------
 
@@ -472,11 +535,11 @@ client.update_model_version(
 
 # COMMAND ----------
 
-# client.transition_model_version_stage(
-#   name=model_name,
-#   version=model_details.version,
-#   stage="Archived",
-# )
+client.transition_model_version_stage(
+  name=model_name,
+  version=model_details.version,
+  stage="Archived",
+)
 
 # COMMAND ----------
 
