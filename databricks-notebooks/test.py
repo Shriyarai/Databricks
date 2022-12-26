@@ -15,15 +15,15 @@ from databricks_cli.runs.api import RunsApi
 # adding comment 
 
 api_client = ApiClient(
-    host=os.getenv("DATABRICKS_HOST"),
-    token=os.getenv("DATABRICKS_TOKEN")
+    host=os.getenv("MY_DATABRICKS_HOST"),
+    token=os.getenv("MY_DATABRICKS_TOKEN")
 )
 
 # COMMAND ----------
 
-print(os.getenv("DATABRICKS_HOST"))
+print(os.getenv("MY_DATABRICKS_HOST"))
 print("hello")
-print(os.getenv("DATABRICKS_TOKEN"))
+print(os.getenv("MY_DATABRICKS_TOKEN"))
 
 # COMMAND ----------
 
@@ -31,7 +31,7 @@ jobs_api = JobsApi(api_client)  # https://github.com/databricks/databricks-cli/b
 runs_api = RunsApi(api_client)  # https://github.com/databricks/databricks-cli/blob/main/databricks_cli/runs/api.py
 
 # --------------- TRIGGER TRAINING AND EVALUATION -----------------
-train_eval_run = jobs_api.run_now(50658138393556,
+train_eval_run = jobs_api.run_now(917131323362732,
                                   jar_params=None,
                                   notebook_params=None,
                                   python_params=None,

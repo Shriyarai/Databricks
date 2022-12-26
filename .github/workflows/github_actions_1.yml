@@ -29,7 +29,7 @@ jobs:
           pip install databricks-cli --upgrade
       - name: Run training on databricks
         run: |
-          export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
-          export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
+          export DATABRICKS_HOST=${{ secrets.MY_DATABRICKS_HOST }}
+          export DATABRICKS_TOKEN=${{ secrets.MY_DATABRICKS_TOKEN }}
           python databricks-notebooks/test.py
     

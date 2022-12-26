@@ -122,7 +122,7 @@ print('Created regression quality plot function')
 
 # COMMAND ----------
 
-experiment = mlflow.set_experiment("/Users/srai5@statestreet.com/03 - Managing Experiments and Models/Exp_1")
+experiment = mlflow.set_experiment("/Users/shriya.rai04@gmail.com/Exp_1")
 
 # COMMAND ----------
 
