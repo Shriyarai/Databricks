@@ -15,15 +15,15 @@ from databricks_cli.runs.api import RunsApi
 # adding comment 
 
 api_client = ApiClient(
-    host=os.getenv("MY_DATABRICKS_HOST"),
-    token=os.getenv("MY_DATABRICKS_TOKEN")
+    host=os.getenv("DATABRICKS_HOST"),
+    token=os.getenv("DATABRICKS_TOKEN")
 )
 
 # COMMAND ----------
 
-print(os.getenv("MY_DATABRICKS_HOST"))
+print(os.getenv("DATABRICKS_HOST"))
 print("hello")
-print(os.getenv("MY_DATABRICKS_TOKEN"))
+print(os.getenv("DATABRICKS_TOKEN"))
 
 # COMMAND ----------
 
