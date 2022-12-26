@@ -452,7 +452,9 @@ print('Created training and evaluation method')
 
 # COMMAND ----------
 
+model_name = "NYC Taxi Amount API 1"
 model_version_infos = client.search_model_versions("name = '%s'" % model_name)
+print(model_version_infos)
 new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
 
 wait_until_ready(model_name, new_model_version)
@@ -490,7 +492,7 @@ client.transition_model_version_stage(
 
 # COMMAND ----------
 
-Generate a prediction for the new model
+# Generate a prediction for the new model
 forecast_nyc_taxi_amount(model_name, "Staging", df)
 
 # COMMAND ----------
