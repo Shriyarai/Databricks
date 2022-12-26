@@ -390,7 +390,7 @@ forecast_nyc_taxi_amount(model_name, model_stage, df)
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
 
-model_name = None
+model_name = "NYC Taxi Amount API 1"
 elastic_net_param = 0.0
 reg_param = 0.3
 max_iter = 500
@@ -452,7 +452,6 @@ print('Created training and evaluation method')
 
 # COMMAND ----------
 
-model_name = "NYC Taxi Amount API 1"
 model_version_infos = client.search_model_versions("name = '%s'" % model_name)
 print(model_version_infos)
 new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
