@@ -32,4 +32,7 @@ jobs:
           export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
           export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
           python databricks-notebooks/test.py
+      - name: Enable serving for created model
+        run: |
+          sh enable_serving.sh
     
