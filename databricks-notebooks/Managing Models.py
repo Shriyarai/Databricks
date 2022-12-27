@@ -246,7 +246,7 @@ client = MlflowClient()
 
 # COMMAND ----------
 
-# uncomment when running directly through notebook
+# # uncomment when running directly through notebook
 
 # user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
 # experiment_name = "/Repos/{user_name}/Databricks/databricks-notebooks/Managing Models".format(user_name=user_name)
@@ -541,6 +541,21 @@ client.transition_model_version_stage(
   version=model_details.version,
   stage="Archived",
 )
+
+# COMMAND ----------
+
+for model_version_info in model_version_infos:
+#     print(model_version_info)
+    if model_version_info.version == new_model_version:
+#         print(model_version_info.version)
+        latest_model_rid = model_version_info.run_id
+print(latest_model_rid)
+
+# COMMAND ----------
+
+# MAGIC %sh
+# MAGIC 
+# MAGIC mlflow models serve --model-uri runs:/{latest_model_rid}/model --no-conda
 
 # COMMAND ----------
 
