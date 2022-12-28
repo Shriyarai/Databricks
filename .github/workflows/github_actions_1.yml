@@ -27,11 +27,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install databricks-cli --upgrade
+          
       - name: Run training on databricks
         run: |
           export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
           export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
-          python databricks-notebooks/test.py  
+          python databricks-notebooks/test.py 
+          
       - name: Enable model serving
         run: |
           #export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
