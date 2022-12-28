@@ -537,7 +537,7 @@ forecast_nyc_taxi_amount(model_name, "Production", df)
 # COMMAND ----------
 
 for model_version_info in model_version_infos:
-    if model_version_info.version != new_model_version and model_version_info.stage != "Archived":
+    if model_version_info.version != new_model_version and model_version_info.current_stage != "Archived":
         client.transition_model_version_stage(
             name=model_name,
             version=model_version_info.version,
