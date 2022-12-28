@@ -33,7 +33,7 @@ from pyspark.ml.feature import StringIndexer
 from pyspark.ml.feature import OneHotEncoder
 from pyspark.ml import Pipeline
 
-dataset = spark.sql("select * from nyc_taxi_1")
+dataset = spark.sql("SELECT * FROM `hive_metastore`.`default`.`nyc_taxi`")
 
 def get_sin_cosine(value, max_value):
   sine =  np.sin(value * (2.*np.pi/max_value))
@@ -267,7 +267,7 @@ print(runs_df)
 run_id = runs_df[0].info.run_uuid
 print(run_id)
 
-model_name = "NYC Taxi Amount API 1"
+model_name = "NYC Taxi Amount API GA"
 
 artifact_path = "model"
 model_uri = "runs:/{run_id}/{artifact_path}".format(run_id=run_id, artifact_path=artifact_path)
@@ -390,7 +390,7 @@ forecast_nyc_taxi_amount(model_name, model_stage, df)
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
 
-model_name = "NYC Taxi Amount API 1"
+model_name = "NYC Taxi Amount API GA"
 elastic_net_param = 0.0
 reg_param = 0.3
 max_iter = 500
@@ -544,18 +544,17 @@ client.transition_model_version_stage(
 
 # COMMAND ----------
 
-for model_version_info in model_version_infos:
-#     print(model_version_info)
-    if model_version_info.version == new_model_version:
-#         print(model_version_info.version)
-        latest_model_rid = model_version_info.run_id
-print(latest_model_rid)
+# for model_version_info in model_version_infos:
+# #     print(model_version_info)
+#     if model_version_info.version == new_model_version:
+# #         print(model_version_info.version)
+#         latest_model_rid = model_version_info.run_id
+# print(latest_model_rid)
 
 # COMMAND ----------
 
-# MAGIC %sh
-# MAGIC 
-# MAGIC mlflow models serve --model-uri runs:/{latest_model_rid}/model --no-conda
+# %sh
+# mlflow models serve --model-uri runs:/{latest_model_rid}/model --no-conda
 
 # COMMAND ----------
 
