@@ -555,7 +555,7 @@ dbutils.fs.put("file:///root/.databrickscfg","[DEFAULT]\nhost=https://dbc-1f8758
 
 # MAGIC %sh
 # MAGIC 
-# MAGIC mlflow models --enable-mlserver --model-uri runs:/{latest_model_rid}/model 
+# MAGIC mlflow models serve --model-uri runs:/{latest_model_rid}/model 
 
 # COMMAND ----------
 
