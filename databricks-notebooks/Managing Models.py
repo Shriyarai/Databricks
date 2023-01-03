@@ -543,8 +543,16 @@ for model_version_info in model_version_infos:
             version=model_version_info.version,
             stage="Archived",
         )
+    
+
+# COMMAND ----------
+
+for model_version_info in model_version_infos:
+#     print(model_version_info)
     if model_version_info.version == new_model_version:
-        latest_model_rid = model_version_info.run_id        
+#         print(model_version_info.version)
+        latest_model_rid = model_version_info.run_id
+print(latest_model_rid)
 
 # COMMAND ----------
 
@@ -553,9 +561,7 @@ dbutils.fs.put("file:///root/.databrickscfg","[DEFAULT]\nhost=https://dbc-1f8758
 
 # COMMAND ----------
 
-# MAGIC %sh
-# MAGIC 
-# MAGIC mlflow models serve --model-uri runs:/{latest_model_rid}/model 
+mlflow models serve --model-uri runs:/{latest_model_rid}/model 
 
 # COMMAND ----------
 
