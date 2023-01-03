@@ -318,6 +318,12 @@ client.update_model_version(
   description="This model version was built using Spark ML's linear regression algorithm."
 )
 
+client.transition_model_version_stage(
+  name=model_name,
+  version=model_details.version,
+  stage="Staging",
+)
+
 # COMMAND ----------
 
 # MAGIC %md ### Model Staging
