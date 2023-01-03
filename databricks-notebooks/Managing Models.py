@@ -543,6 +543,19 @@ for model_version_info in model_version_infos:
             version=model_version_info.version,
             stage="Archived",
         )
+    if model_version_info.version == new_model_version:
+        latest_model_rid = model_version_info.run_id        
+
+# COMMAND ----------
+
+token = dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().get()
+dbutils.fs.put("file:///root/.databrickscfg","[DEFAULT]\nhost=https://dbc-1f875879-7090.cloud.databricks.com\ntoken = "+token,overwrite=True)
+
+# COMMAND ----------
+
+# MAGIC %sh
+# MAGIC 
+# MAGIC mlflow models --enable-mlserver --model-uri runs:/{latest_model_rid}/model 
 
 # COMMAND ----------
 
