@@ -453,8 +453,9 @@ print('Created training and evaluation method')
 # COMMAND ----------
 
 model_version_infos = client.search_model_versions("name = '%s'" % model_name)
-print(model_version_infos)
+# print(model_version_infos)
 new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
+print(new_model_version)
 
 wait_until_ready(model_name, new_model_version)
 
@@ -561,7 +562,9 @@ dbutils.fs.put("file:///root/.databrickscfg","[DEFAULT]\nhost=https://dbc-1f8758
 
 # COMMAND ----------
 
-mlflow models serve --model-uri runs:/{latest_model_rid}/model 
+#%sh 
+
+#mlflow models serve --model-uri runs:/{latest_model_rid}/model 
 
 # COMMAND ----------
 
