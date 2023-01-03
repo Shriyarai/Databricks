@@ -350,11 +350,11 @@ print("The current model stage is: '{stage}'".format(stage=model_version_details
 
 # COMMAND ----------
 
-# model_version_infos = client.search_model_versions("name = '%s'" % model_name)
-# print(model_version_infos)
-# new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
-# print(new_model_version)
-# wait_until_ready(model_name, new_model_version)
+model_version_infos = client.search_model_versions("name = '%s'" % model_name)
+print(model_version_infos)
+new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
+print(new_model_version)
+wait_until_ready(model_name, new_model_version)
 
 
 # COMMAND ----------
@@ -403,7 +403,7 @@ forecast_nyc_taxi_amount(model_name, model_stage, df)
 
 # COMMAND ----------
 
-model_version_infos = client.search_model_versions("name = '%s'" % model_name)
+# model_version_infos = client.search_model_versions("name = '%s'" % model_name)
 
 for model_version_info in model_version_infos:
     if model_version_info.version != latest_production_version and model_version_info.current_stage != "Archived":
