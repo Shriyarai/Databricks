@@ -87,6 +87,7 @@ preppedDataDF = pipelineModel.transform(dataset)
 
 print('Data preparation work completed.')
 
+
 # COMMAND ----------
 
 # MAGIC %md With this data in place, create a function to plot the quality of the regression model based on predicted amounts versus actual amounts.
@@ -325,6 +326,11 @@ else:
         description="This model version was updated for demo purposes."
         )
     
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Run unit tests before moving to staging - move to a diff notebook and setup a new job
 
 # COMMAND ----------
 
