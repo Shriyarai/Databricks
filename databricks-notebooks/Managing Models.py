@@ -453,10 +453,9 @@ print('Created training and evaluation method')
 # COMMAND ----------
 
 model_version_infos = client.search_model_versions("name = '%s'" % model_name)
-# print(model_version_infos)
+print(model_version_infos)
 new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
 print(new_model_version)
-
 wait_until_ready(model_name, new_model_version)
 
 
@@ -544,27 +543,6 @@ for model_version_info in model_version_infos:
             version=model_version_info.version,
             stage="Archived",
         )
-    
-
-# COMMAND ----------
-
-for model_version_info in model_version_infos:
-#     print(model_version_info)
-    if model_version_info.version == new_model_version:
-#         print(model_version_info.version)
-        latest_model_rid = model_version_info.run_id
-print(latest_model_rid)
-
-# COMMAND ----------
-
-token = dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().get()
-dbutils.fs.put("file:///root/.databrickscfg","[DEFAULT]\nhost=https://dbc-1f875879-7090.cloud.databricks.com\ntoken = "+token,overwrite=True)
-
-# COMMAND ----------
-
-#%sh 
-
-#mlflow models serve --model-uri runs:/{latest_model_rid}/model 
 
 # COMMAND ----------
 
