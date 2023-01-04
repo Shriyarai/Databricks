@@ -83,7 +83,13 @@ partialPipeline = Pipeline().setStages(stages)
 pipelineModel = partialPipeline.fit(dataset)
 preppedDataDF = pipelineModel.transform(dataset)
 
+# preppedDataDF.write.format("parquet").saveAsTable("NYC_Taxi_TrainTest")
+
 (trainingData, testData) = preppedDataDF.randomSplit([0.7, 0.3], seed=97)
+
+# print(testData)
+
+# testData.createOrReplaceTempView("testData")
 
 print('Data preparation work completed.')
 
