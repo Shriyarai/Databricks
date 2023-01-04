@@ -1,37 +1,56 @@
-name: Run a notebook
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [pull_request]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+
+#name: Run a notebook
 
 # Controls when the workflow will run
-on:
+#on:
   # Triggers the workflow on push or pull request events but only for the "main" branch.
-  pull_request:
+  #pull_request
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
+#jobs:
   # job 1: "build" -- trains a new model an ensures that it meets some threshold for performance
-  build:
+  #build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+    #steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      #- name: Checkout repo
+        #uses: actions/checkout@v3
 
-      - name: Setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
+      #- name: Setup python
+        #uses: actions/setup-python@v4
+        #with:
+          #python-version: '3.9'
 
-      - name: Configure python packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install databricks-cli --upgrade
+      #- name: Configure python packages
+        #run: |
+          #python -m pip install --upgrade pip
+          #pip install databricks-cli --upgrade
           
-      - name: Run training on databricks
-        run: |
-          export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
-          export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
-          python databricks-notebooks/test.py 
+      #- name: Run training on databricks
+        #run: |
+          #export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
+          #export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
+          #python databricks-notebooks/test.py 
           
-      

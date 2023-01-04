@@ -70,7 +70,7 @@ partialPipeline = Pipeline().setStages(stages)
 pipelineModel = partialPipeline.fit(dataset)
 preppedDataDF = pipelineModel.transform(dataset)
 
-(trainingData, testData) = preppedDataDF.randomSplit([0.7, 0.3], seed=97)
+(trainingData, testData) = dataset.randomSplit([0.7, 0.3], seed=97)
 
 
 # COMMAND ----------
