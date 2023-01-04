@@ -114,6 +114,7 @@ def plot_regression_quality(predictions):
   global image
 
   image = fig
+  plt.show()
 #   for some reasons giving error in GA
 #   fig.savefig("LinearRegressionPrediction.png")
   plt.close(fig)
@@ -123,7 +124,7 @@ print('Created regression quality plot function')
 
 # COMMAND ----------
 
-experiment = mlflow.set_experiment("/Users/shriya.rai04@gmail.com/Exp_1")
+experiment = mlflow.set_experiment("/Users/shriya.rai04@gmail.com/Exp_2")
 
 # COMMAND ----------
 
@@ -247,13 +248,13 @@ client = MlflowClient()
 
 # COMMAND ----------
 
-# # uncomment when running directly through notebook
+# uncomment when running directly through notebook
 
-# user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
-# experiment_name = "/Repos/{user_name}/Databricks/databricks-notebooks/Managing Models".format(user_name=user_name)
+user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
+experiment_name = "/Repos/{user_name}/Databricks/databricks-notebooks/Create Model".format(user_name=user_name)
 
-# experiment = client.get_experiment_by_name(experiment_name)
-# print(experiment)
+experiment = client.get_experiment_by_name(experiment_name)
+print(experiment)
 
 # COMMAND ----------
 
@@ -268,7 +269,7 @@ print(runs_df)
 run_id = runs_df[0].info.run_uuid
 print(run_id)
 
-model_name = "NYC Taxi Amount API GA"
+model_name = "NYC Taxi Amount API Demo"
 
 artifact_path = "model"
 model_uri = "runs:/{run_id}/{artifact_path}".format(run_id=run_id, artifact_path=artifact_path)
@@ -342,43 +343,43 @@ else:
 
 # COMMAND ----------
 
-client.transition_model_version_stage(
-  name=model_name,
-  version=model_details.version,
-  stage="Staging",
-)
+# client.transition_model_version_stage(
+#   name=model_name,
+#   version=model_details.version,
+#   stage="Staging",
+# )
 
-model_version_details = client.get_model_version(
-  name=model_details.name,
-  version=model_details.version,
-)
-print("The current model stage is: '{stage}'".format(stage=model_version_details.current_stage))
-
-# COMMAND ----------
-
-model_version_infos = client.search_model_versions("name = '%s'" % model_name)
-print(model_version_infos)
-new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
-print(new_model_version)
-wait_until_ready(model_name, new_model_version)
-
+# model_version_details = client.get_model_version(
+#   name=model_details.name,
+#   version=model_details.version,
+# )
+# print("The current model stage is: '{stage}'".format(stage=model_version_details.current_stage))
 
 # COMMAND ----------
 
-client.transition_model_version_stage(
-  name=model_name,
-  version=new_model_version,
-  stage='Production',
-)
-model_version_details = client.get_model_version(
-  name=model_details.name,
-  version=model_details.version,
-)
-print("The current model stage is: '{stage}'".format(stage=model_version_details.current_stage))
+# model_version_infos = client.search_model_versions("name = '%s'" % model_name)
+# print(model_version_infos)
+# new_model_version = max([model_version_info.version for model_version_info in model_version_infos])
+# print(new_model_version)
+# wait_until_ready(model_name, new_model_version)
 
-latest_version_info = client.get_latest_versions(model_name, stages=["Production"])
-latest_production_version = latest_version_info[0].version
-print("The latest production version of the model '%s' is '%s'." % (model_name, latest_production_version))
+
+# COMMAND ----------
+
+# client.transition_model_version_stage(
+#   name=model_name,
+#   version=new_model_version,
+#   stage='Production',
+# )
+# model_version_details = client.get_model_version(
+#   name=model_details.name,
+#   version=model_details.version,
+# )
+# print("The current model stage is: '{stage}'".format(stage=model_version_details.current_stage))
+
+# latest_version_info = client.get_latest_versions(model_name, stages=["Production"])
+# latest_production_version = latest_version_info[0].version
+# print("The latest production version of the model '%s' is '%s'." % (model_name, latest_production_version))
 
 # COMMAND ----------
 
@@ -388,13 +389,13 @@ print("The latest production version of the model '%s' is '%s'." % (model_name, 
 
 # COMMAND ----------
 
-import mlflow.pyfunc
+# import mlflow.pyfunc
 
-def forecast_nyc_taxi_amount(model_name, model_stage, df):
-  model_uri = "models:/{model_name}/{model_stage}".format(model_name=model_name,model_stage=model_stage)
-  print("Loading registered model version from URI: '{model_uri}'".format(model_uri=model_uri))
-  model = mlflow.pyfunc.load_model(model_uri)
-  return model.predict(df)
+# def forecast_nyc_taxi_amount(model_name, model_stage, df):
+#   model_uri = "models:/{model_name}/{model_stage}".format(model_name=model_name,model_stage=model_stage)
+#   print("Loading registered model version from URI: '{model_uri}'".format(model_uri=model_uri))
+#   model = mlflow.pyfunc.load_model(model_uri)
+#   return model.predict(df)
 
 # COMMAND ----------
 
@@ -402,22 +403,22 @@ def forecast_nyc_taxi_amount(model_name, model_stage, df):
 
 # COMMAND ----------
 
-model_stage = "Production"
-df = testData.head(1)
-forecast_nyc_taxi_amount(model_name, model_stage, df)
+# model_stage = "Production"
+# df = testData.head(1)
+# forecast_nyc_taxi_amount(model_name, model_stage, df)
 
 
 # COMMAND ----------
 
-# model_version_infos = client.search_model_versions("name = '%s'" % model_name)
+# # model_version_infos = client.search_model_versions("name = '%s'" % model_name)
 
-for model_version_info in model_version_infos:
-    if model_version_info.version != latest_production_version and model_version_info.current_stage != "Archived":
-        client.transition_model_version_stage(
-            name=model_name,
-            version=model_version_info.version,
-            stage="Archived",
-        )
+# for model_version_info in model_version_infos:
+#     if model_version_info.version != latest_production_version and model_version_info.current_stage != "Archived":
+#         client.transition_model_version_stage(
+#             name=model_name,
+#             version=model_version_info.version,
+#             stage="Archived",
+#         )
 
 # COMMAND ----------
 
