@@ -240,6 +240,7 @@ print('Created training and evaluation method')
 
 # COMMAND ----------
 
+#MLflow used
 from mlflow.tracking import MlflowClient
 import time
 from mlflow.entities.model_registry.model_version_status import ModelVersionStatus
