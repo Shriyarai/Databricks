@@ -39,7 +39,7 @@ def forecast_nyc_taxi_amount(model_name, model_stage, df):
 
 # COMMAND ----------
 
-model_name = "NYC Taxi Amount API Demo"
+model_name = "NYC_Taxi_Amount_API"
 model_stage = "Production"
 df = testData.head(1)
 # print(df)
