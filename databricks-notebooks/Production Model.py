@@ -12,7 +12,7 @@ client = MlflowClient()
 
 # COMMAND ----------
 
-model_name = "NYC Taxi Amount API Demo"
+model_name = "NYC_Taxi_Amount_API"
 
 model_version_infos = client.search_model_versions("name = '%s'" % model_name)
 print(model_version_infos)
