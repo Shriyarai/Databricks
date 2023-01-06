@@ -33,6 +33,7 @@ jobs:
         run: |
           export DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}
           export DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}
-          python databricks-triggers/stage.py 
           python databricks-triggers/test.py
+          python databricks-triggers/stage.py 
+          
       
