@@ -276,7 +276,7 @@ print(runs_df)
 run_id = runs_df[0].info.run_uuid
 print(run_id)
 
-model_name = "NYC Taxi Amount API Demo"
+model_name = "NYC_Taxi_Amount_API"
 
 artifact_path = "model"
 model_uri = "runs:/{run_id}/{artifact_path}".format(run_id=run_id, artifact_path=artifact_path)
