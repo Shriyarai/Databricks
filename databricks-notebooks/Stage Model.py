@@ -1,4 +1,12 @@
 # Databricks notebook source
+# MAGIC %md ### Model Staging
+# MAGIC 
+# MAGIC MLflow allows multiple versions of a model to exist at the same time.  To remove ambiguity in which model should be in use at any time, you can stage models, using states such as `Staging` or `Production`.
+# MAGIC 
+# MAGIC Use the `Production` stage on the version of the model you want to use for inference. 
+
+# COMMAND ----------
+
 import mlflow
 import mlflow.spark
 

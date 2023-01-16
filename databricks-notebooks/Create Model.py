@@ -97,7 +97,10 @@ print('Data preparation work completed.')
 
 # COMMAND ----------
 
-# MAGIC %md With this data in place, create a function to plot the quality of the regression model based on predicted amounts versus actual amounts.
+# MAGIC %md
+# MAGIC ## Create a Plot
+# MAGIC 
+# MAGIC With this data in place, create a function to plot the quality of the regression model based on predicted amounts versus actual amounts.
 
 # COMMAND ----------
 
@@ -135,7 +138,10 @@ experiment = mlflow.set_experiment("/Users/shriya.rai04@gmail.com/Exp_2")
 
 # COMMAND ----------
 
-# MAGIC %md The following method trains the regression model and uses MLflow Tracking to record parameters, metrics, model, and a plot which compares actual versus predicted amounts spent on taxi rides.  This is essentially the same model as what you used in the prior lesson, although there is a minor change in lines 40-43, which you will take advantage of in the next exercise.
+# MAGIC %md 
+# MAGIC ## Train & Track Model
+# MAGIC 
+# MAGIC The following method trains the regression model and uses MLflow Tracking to record parameters, metrics, model, and a plot which compares actual versus predicted amounts spent on taxi rides.  This is essentially the same model as what you used in the prior lesson, although there is a minor change in lines 40-43, which you will take advantage of in the next exercise.
 
 # COMMAND ----------
 
