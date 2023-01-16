@@ -256,13 +256,13 @@ client = MlflowClient()
 
 # COMMAND ----------
 
-# uncomment when running directly through notebook
+# # uncomment when running directly through notebook
 
-user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
-experiment_name = "/Repos/{user_name}/Databricks/databricks-notebooks/Create Model".format(user_name=user_name)
+# user_name = dbutils.notebook.entry_point.getDbutils().notebook().getContext().tags().apply('user')
+# experiment_name = "/Repos/{user_name}/Databricks/databricks-notebooks/Create Model".format(user_name=user_name)
 
-experiment = client.get_experiment_by_name(experiment_name)
-print(experiment)
+# experiment = client.get_experiment_by_name(experiment_name)
+# print(experiment)
 
 # COMMAND ----------
 
