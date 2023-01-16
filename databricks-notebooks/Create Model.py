@@ -149,9 +149,9 @@ from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
 
 model_name = None
-elastic_net_param = 0.9
-reg_param = 0.5
-max_iter = 50
+elastic_net_param = 0.4
+reg_param = 0.4
+max_iter = 40
 
   # Evaluate metrics
 def eval_metrics(predictions):
