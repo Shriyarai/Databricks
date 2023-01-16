@@ -27,8 +27,8 @@ model_name = "NYC_Taxi_Amount_API"
 prod_model_info = client.get_latest_versions(model_name, stages=["Production"])
 print(prod_model_info)
 # print(prod_model_info[0].run_id)
-prod_run = mlflow.get_run(run_id=prod_model_info[0].run_id)
-print(prod_run.data.metrics['r2'])
+# prod_run = mlflow.get_run(run_id=prod_model_info[0].run_id)
+# print(prod_run.data.metrics['r2'])
 
 # COMMAND ----------
 
