@@ -1,22 +1,7 @@
 # Databricks notebook source
-import urllib.request
-import os
-import warnings
-import sys
-import numpy as np
-from pyspark.sql.types import * 
-from pyspark.sql.functions import col, lit
-from pyspark.sql.functions import udf
-import matplotlib
-import matplotlib.pyplot as plt
-import mlflow
-import mlflow.spark
-from pyspark.ml.feature import Imputer
-from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.feature import MinMaxScaler
-from pyspark.ml.feature import StringIndexer
-from pyspark.ml.feature import OneHotEncoder
-from pyspark.ml import Pipeline
+# MAGIC %md ### Model Inference
+# MAGIC 
+# MAGIC The following function will allow you to forecast the cost of a taxi ride in New York City given certain conditions.
 
 # COMMAND ----------
 

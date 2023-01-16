@@ -1,4 +1,10 @@
 # Databricks notebook source
+# MAGIC %md ### Transitioning a New Version of a Model
+# MAGIC 
+# MAGIC Now that the `Staging` model version is out, the next step is to compare the latest model version to `Production` and transition it accordingly.  Do this using the same `transition_model_version_stage()` method as before.
+
+# COMMAND ----------
+
 import mlflow
 import mlflow.spark
 
@@ -25,10 +31,13 @@ print(model)
 model_name = "NYC_Taxi_Amount_API"
 
 prod_model_info = client.get_latest_versions(model_name, stages=["Production"])
-print(prod_model_info)
+# print(prod_model_info)
 # print(prod_model_info[0].run_id)
 prod_run = mlflow.get_run(run_id=prod_model_info[0].run_id)
+
 print(prod_run.data.metrics['r2'])
+
+prod_run_r2 = prod_run.data.metrics['r2']
 
 # COMMAND ----------
 
@@ -47,12 +56,19 @@ print(new_model_version)
 
 for model_version_info in model_version_infos:
     if model_version_info.version == new_model_version and model_version_info.current_stage == "Staging":
-        client.transition_model_version_stage(
+        latest_run = mlflow.get_run(run_id=model_version_info.run_id)
+        latest_run_r2 = latest_run.data.metrics['r2']
+        print(latest_run_r2)
+
+# COMMAND ----------
+
+if latest_run_r2 > prod_run_r2:
+    client.transition_model_version_stage(
             name=model_name,
             version=new_model_version,
             stage='Production',
             )
-        
+
 model_version_details = client.get_model_version(
   name=model_name,
   version=new_model_version,
@@ -62,6 +78,13 @@ print("The current model stage is: '{stage}'".format(stage=model_version_details
 latest_version_info = client.get_latest_versions(model_name, stages=["Production"])
 latest_production_version = latest_version_info[0].version
 print("The latest production version of the model '%s' is '%s'." % (model_name, latest_production_version))
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Archiving a Model Version
+# MAGIC 
+# MAGIC In order to archive a model version, call `transition_model_version_stage()` once more, but use the `Archived` stage.
 
 # COMMAND ----------
 
@@ -77,4 +100,4 @@ for model_version_info in model_version_infos:
 
 # COMMAND ----------
 
-
+# MAGIC %md Before you are able to delete a model, you must transition all `Production` or `Staging` versions to `Archived`.  This is a safety precaution to prevent accidentally deleting a model being served in production.  
