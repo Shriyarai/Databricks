@@ -149,7 +149,7 @@ from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
 
 model_name = None
-elastic_net_param = 0.6
+elastic_net_param = 0.7
 reg_param = 0.4
 max_iter = 40
 
